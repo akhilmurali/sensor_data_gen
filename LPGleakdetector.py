@@ -15,13 +15,13 @@ import math
 from datetime import datetime
 
 if len(sys.argv) < 5:
-    print("Format: <host> <port> <device-id> <region>", sys.argv[0])
+    print("Format: <host> <port> <device-id> <floor>", sys.argv[0])
     exit(-1)
 
 HOST = sys.argv[1]
 PORT = int(sys.argv[2])
 DEVICE_ID = sys.argv[3]
-REGION = sys.argv[4]
+FLOOR = sys.argv[4]
 LIMIT = 0.6
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -36,7 +36,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 try:
                     leak = random.random() > LIMIT
                     # time in milliseconds
-                    data = "{},{},{},{}".format(int(time.time()) * 1000, DEVICE_ID, REGION, leak)
+                    data = "{},{},{},{}".format(int(time.time()) * 1000, DEVICE_ID, FLOOR, leak)
                     # data = "{},{},{},{}".format(datetime.now(), DEVICE_ID, REGION, smoke)
                     print(data)
                     conn.sendall("{}\n".format(data).encode('utf-8'))
